@@ -15,8 +15,6 @@ def factorial(n: int) -> int:
         ...
     ValueError: factorial() not defined for negative values
     """
-    if n != int(n):
-        raise ValueError("factorial() only accepts integral values")
     if n < 0:
         raise ValueError("factorial() not defined for negative values")
     value = 1

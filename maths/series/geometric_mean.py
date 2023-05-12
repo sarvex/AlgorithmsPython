@@ -59,7 +59,7 @@ def geometric_mean(series: list) -> float:
     """
     if not isinstance(series, list):
         raise ValueError("Input series is not valid, valid series - [2, 4, 8]")
-    if len(series) == 0:
+    if not series:
         raise ValueError("Input list must be a non empty list")
     if not is_geometric_series(series):
         raise ValueError("Input list is not a geometric series")

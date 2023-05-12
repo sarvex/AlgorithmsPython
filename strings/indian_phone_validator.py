@@ -18,10 +18,7 @@ def indian_phone_validator(phone: str) -> bool:
     False
     """
     pat = re.compile(r"^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$")
-    match = re.search(pat, phone)
-    if match:
-        return match.string == phone
-    return False
+    return match.string == phone if (match := re.search(pat, phone)) else False
 
 
 if __name__ == "__main__":

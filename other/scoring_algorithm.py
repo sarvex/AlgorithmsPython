@@ -78,7 +78,7 @@ def procentual_proximity(source_data: list, weights: list) -> list:
     final_scores = [0 for i in range(len(score_lists[0]))]
 
     # generate final scores
-    for i, slist in enumerate(score_lists):
+    for slist in score_lists:
         for j, ele in enumerate(slist):
             final_scores[j] = final_scores[j] + ele
 

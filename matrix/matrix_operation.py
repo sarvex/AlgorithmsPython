@@ -75,7 +75,7 @@ def identity(n: int) -> list[list]:
     >>> identity(3)
     [[1, 0, 0], [0, 1, 0], [0, 0, 1]]
     """
-    n = int(n)
+    n = n
     return [[int(row == column) for column in range(n)] for row in range(n)]
 
 
@@ -87,10 +87,7 @@ def transpose(matrix: list[list], return_map: bool = True) -> list[list]:
     [[1, 3], [2, 4]]
     """
     if _check_not_integer(matrix):
-        if return_map:
-            return map(list, zip(*matrix))
-        else:
-            return list(map(list, zip(*matrix)))
+        return map(list, zip(*matrix)) if return_map else list(map(list, zip(*matrix)))
 
 
 def minor(matrix: list[list], row: int, column: int) -> list[list]:

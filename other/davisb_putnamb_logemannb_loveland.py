@@ -62,10 +62,8 @@ class Clause:
                 value = model[symbol]
             else:
                 continue
-            if value is not None:
-                # Complement assignment if literal is in complemented form
-                if literal.endswith("'"):
-                    value = not value
+            if value is not None and literal.endswith("'"):
+                value = not value
             self.literals[literal] = value
 
     def evaluate(self, model: dict[str, bool]) -> bool:
@@ -78,7 +76,7 @@ class Clause:
         4. Compute disjunction of all values assigned in clause.
         """
         for literal in self.literals:
-            symbol = literal.rstrip("'") if literal.endswith("'") else literal + "'"
+            symbol = literal.rstrip("'") if literal.endswith("'") else f"{literal}'"
             if symbol in self.literals:
                 return True
 
@@ -198,25 +196,21 @@ def find_pure_symbols(
     {'A1': True, 'A2': False, 'A3': True, 'A5': False}
     """
     pure_symbols = []
-    assignment = dict()
     literals = []
 
     for clause in clauses:
         if clause.evaluate(model) is True:
             continue
-        for literal in clause.literals:
-            literals.append(literal)
-
+        literals.extend(iter(clause.literals))
     for s in symbols:
-        sym = s + "'"
+        sym = f"{s}'"
         if (s in literals and sym not in literals) or (
             s not in literals and sym in literals
         ):
             pure_symbols.append(s)
-    for p in pure_symbols:
-        assignment[p] = None
+    assignment = {p: None for p in pure_symbols}
     for s in pure_symbols:
-        sym = s + "'"
+        sym = f"{s}'"
         if s in literals:
             assignment[s] = True
         elif sym in literals:
@@ -263,7 +257,7 @@ def find_unit_clauses(
                     Ncount += 1
             if Fcount == len(clause) - 1 and Ncount == 1:
                 unit_symbols.append(sym)
-    assignment = dict()
+    assignment = {}
     for i in unit_symbols:
         symbol = i[:2]
         assignment[symbol] = len(i) == 2
@@ -316,7 +310,7 @@ def dpll_algorithm(
     if P:
         tmp_model = model
         tmp_model[P] = value
-        tmp_symbols = [i for i in symbols]
+        tmp_symbols = list(symbols)
         if P in tmp_symbols:
             tmp_symbols.remove(P)
         return dpll_algorithm(clauses, tmp_symbols, tmp_model)
@@ -328,7 +322,7 @@ def dpll_algorithm(
     if P:
         tmp_model = model
         tmp_model[P] = value
-        tmp_symbols = [i for i in symbols]
+        tmp_symbols = list(symbols)
         if P in tmp_symbols:
             tmp_symbols.remove(P)
         return dpll_algorithm(clauses, tmp_symbols, tmp_model)

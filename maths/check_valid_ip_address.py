@@ -32,9 +32,7 @@ def check_valid_ip(ip: str) -> bool:
         if i > 254:
             count += 1
             break
-    if count:
-        return False
-    return True
+    return not count
 
 
 if __name__ == "__main__":

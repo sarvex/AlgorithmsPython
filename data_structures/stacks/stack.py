@@ -59,7 +59,7 @@ def test_stack() -> None:
     >>> test_stack()
     """
     stack = Stack(10)
-    assert bool(stack) is False
+    assert not bool(stack)
     assert stack.is_empty() is True
     assert stack.is_full() is False
     assert str(stack) == "[]"
@@ -80,7 +80,7 @@ def test_stack() -> None:
         assert stack.size() == i
         stack.push(i)
 
-    assert bool(stack) is True
+    assert bool(stack)
     assert stack.is_empty() is False
     assert stack.is_full() is True
     assert str(stack) == str(list(range(10)))

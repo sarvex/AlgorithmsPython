@@ -8,10 +8,7 @@ def _input(message):
 def initialize_unweighted_directed_graph(
     node_count: int, edge_count: int
 ) -> dict[int, list[int]]:
-    graph: dict[int, list[int]] = {}
-    for i in range(node_count):
-        graph[i + 1] = []
-
+    graph: dict[int, list[int]] = {i + 1: [] for i in range(node_count)}
     for e in range(edge_count):
         x, y = (int(i) for i in _input(f"Edge {e + 1}: <node1> <node2> "))
         graph[x].append(y)
@@ -21,10 +18,7 @@ def initialize_unweighted_directed_graph(
 def initialize_unweighted_undirected_graph(
     node_count: int, edge_count: int
 ) -> dict[int, list[int]]:
-    graph: dict[int, list[int]] = {}
-    for i in range(node_count):
-        graph[i + 1] = []
-
+    graph: dict[int, list[int]] = {i + 1: [] for i in range(node_count)}
     for e in range(edge_count):
         x, y = (int(i) for i in _input(f"Edge {e + 1}: <node1> <node2> "))
         graph[x].append(y)
@@ -35,10 +29,9 @@ def initialize_unweighted_undirected_graph(
 def initialize_weighted_undirected_graph(
     node_count: int, edge_count: int
 ) -> dict[int, list[tuple[int, int]]]:
-    graph: dict[int, list[tuple[int, int]]] = {}
-    for i in range(node_count):
-        graph[i + 1] = []
-
+    graph: dict[int, list[tuple[int, int]]] = {
+        i + 1: [] for i in range(node_count)
+    }
     for e in range(edge_count):
         x, y, w = (int(i) for i in _input(f"Edge {e + 1}: <node1> <node2> <weight> "))
         graph[x].append((y, w))
@@ -139,10 +132,9 @@ def dijk(G, s):
                 u = i
         known.add(u)
         for v in G[u]:
-            if v[0] not in known:
-                if dist[u] + v[1] < dist.get(v[0], 100000):
-                    dist[v[0]] = dist[u] + v[1]
-                    path[v[0]] = u
+            if v[0] not in known and dist[u] + v[1] < dist.get(v[0], 100000):
+                dist[v[0]] = dist[u] + v[1]
+                path[v[0]] = u
     for i in dist:
         if i != s:
             print(dist[i])
@@ -187,9 +179,7 @@ def topo(G, ind=None, Q=None):
 
 def adjm():
     n = input().strip()
-    a = []
-    for i in range(n):
-        a.append(map(int, input().strip().split()))
+    a = [map(int, input().strip().split()) for _ in range(n)]
     return a, n
 
 
@@ -209,7 +199,7 @@ def adjm():
 def floy(A_and_n):
     (A, n) = A_and_n
     dist = list(A)
-    path = [[0] * n for i in range(n)]
+    path = [[0] * n for _ in range(n)]
     for k in range(n):
         for i in range(n):
             for j in range(n):
@@ -243,10 +233,9 @@ def prim(G, s):
                 u = i
         known.add(u)
         for v in G[u]:
-            if v[0] not in known:
-                if v[1] < dist.get(v[0], 100000):
-                    dist[v[0]] = v[1]
-                    path[v[0]] = u
+            if v[0] not in known and v[1] < dist.get(v[0], 100000):
+                dist[v[0]] = v[1]
+                path[v[0]] = u
     return dist
 
 
@@ -263,9 +252,7 @@ def prim(G, s):
 
 def edglist():
     n, m = map(int, input().split(" "))
-    edges = []
-    for i in range(m):
-        edges.append(map(int, input().split(" ")))
+    edges = [map(int, input().split(" ")) for _ in range(m)]
     return edges, n
 
 
@@ -303,8 +290,4 @@ def krusk(E_and_n):
 
 # find the isolated node in the graph
 def find_isolated_nodes(graph):
-    isolated = []
-    for node in graph:
-        if not graph[node]:
-            isolated.append(node)
-    return isolated
+    return [node for node in graph if not graph[node]]

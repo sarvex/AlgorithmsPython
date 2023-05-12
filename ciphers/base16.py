@@ -12,8 +12,7 @@ def encode_to_b16(inp: str) -> bytes:
     b''
     """
     encoded = inp.encode("utf-8")  # encoded the input (we need a bytes like object)
-    b16encoded = base64.b16encode(encoded)  # b16encoded the encoded string
-    return b16encoded
+    return base64.b16encode(encoded)
 
 
 if __name__ == "__main__":

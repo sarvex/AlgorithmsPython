@@ -83,11 +83,7 @@ def has_same_digits(num1: int, num2: int) -> bool:
         num1 //= 10
         num2 //= 10
 
-    for digit in digits:
-        if digit != 0:
-            return False
-
-    return True
+    return all(digit == 0 for digit in digits)
 
 
 def solution(max: int = 10000000) -> int:

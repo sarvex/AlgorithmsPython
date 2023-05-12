@@ -47,16 +47,8 @@ class Graph:
         >>> sorted(g.bfs(2))
         [0, 1, 2, 3]
         """
-        # initialize set for storing already visited vertices
-        visited = set()
-
-        # create a first in first out queue to store all the vertices for BFS
-        queue = []
-
-        # mark the source node as visited and enqueue it
-        visited.add(start_vertex)
-        queue.append(start_vertex)
-
+        visited = {start_vertex}
+        queue = [start_vertex]
         while queue:
             vertex = queue.pop(0)
 

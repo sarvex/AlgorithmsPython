@@ -43,8 +43,8 @@ def geometric_series(nth_term: int, start_term_a: int, common_ratio_r: int) -> l
     series = []
     power = 1
     multiple = common_ratio_r
-    for _ in range(int(nth_term)):
-        if series == []:
+    for _ in range(nth_term):
+        if not series:
             series.append(start_term_a)
         else:
             power += 1

@@ -12,11 +12,7 @@ def next_greatest_element_slow(arr: list) -> list:
     """
     result = []
     for i in range(0, len(arr), 1):
-        next = -1
-        for j in range(i + 1, len(arr), 1):
-            if arr[i] < arr[j]:
-                next = arr[j]
-                break
+        next = next((arr[j] for j in range(i + 1, len(arr), 1) if arr[i] < arr[j]), -1)
         result.append(next)
     return result
 
@@ -31,11 +27,7 @@ def next_greatest_element_fast(arr: list) -> list:
     """
     result = []
     for i, outer in enumerate(arr):
-        next = -1
-        for inner in arr[i + 1 :]:
-            if outer < inner:
-                next = inner
-                break
+        next = next((inner for inner in arr[i + 1 :] if outer < inner), -1)
         result.append(next)
     return result
 
@@ -60,10 +52,10 @@ def next_greatest_element(arr: list) -> list:
         if len(stack):
             while stack[-1] <= arr[index]:
                 stack.pop()
-                if len(stack) == 0:
+                if not stack:
                     break
 
-        if len(stack) != 0:
+        if stack:
             result[index] = stack[-1]
 
         stack.append(arr[index])
